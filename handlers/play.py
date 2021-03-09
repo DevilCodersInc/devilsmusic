@@ -118,17 +118,13 @@ async def deezer(requested_by, query):
 
 async def jiosaavn(requested_by, query):
     global playing
-    m = await app.send_message(
-        sudo_chat_id, text=f"Searching for `{query}` on JioSaavn"
-    )
+    res = await message_.reply_text("Searching 🔍🔎🔍🔎 for `{query}` on jio saavn")
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 f"https://jiosaavnapi.bhadoo.uk/result/?query={query}"
             ) as resp:
                 r = json.loads(await resp.text())
-        url =https://jiosaavnapi.bhadoo.uk/result/?query={query}
-        file=wget(url)
         sname = r[0]["song"]
         slink = r[0]["media_url"]
         ssingers = r[0]["singers"]
@@ -142,10 +138,22 @@ async def jiosaavn(requested_by, query):
         print(str(e))
         playing = False
         return
-    await m.edit("Processing Thumbnail.")
+    file_path=wget.download(slink)
+    try:
+        is_playing = tgcalls.pytgcalls.is_playing(message_.chat.id)
+    except:
+        is_playing = False
+
+    if is_playing:
+        position = await sira.add(message_.chat.id, file_path)
+        await res.edit_text(f"#️⃣ Queued at position {position}.")
+    else:
+        await res.edit_text("▶️ Playing...")
+        tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000)
+    await res.edit("Processing Thumbnail.")
     await generate_cover_square(requested_by, sname, ssingers, sduration_converted, sthumb)
-    await m.delete()
-    m = await app.send_photo(
+    await res.delete()
+    m = await client.send_photo(
         chat_id=sudo_chat_id,
         caption=f"Playing `{sname}` Via Jiosaavn",
         photo="final.png",
@@ -154,12 +162,3 @@ async def jiosaavn(requested_by, query):
         ),
         parse_mode="markdown",
     )
-
-    s = await asyncio.create_subprocess_shell(
-        f"mpv {slink} --no-video",
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-    await s.wait()
-    await m.delete()
-    playing = False
