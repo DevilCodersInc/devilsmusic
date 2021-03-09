@@ -69,10 +69,7 @@ async def play(client: Client, message_: Message):
         await res.edit_text("▶️ Playing...")
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000)
 async def deezer(requested_by, query):
-    global playing
-    m = await app.send_message(
-        sudo_chat_id, text=f"Searching for `{query}` on Deezer"
-    )
+    res = await message_.reply_text("Searching 🔍🔎🔍🔎 for `{query}` on deezer")
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(
@@ -88,13 +85,24 @@ async def deezer(requested_by, query):
         await m.edit(
             "Found Literally Nothing, You Should Work On Your English!"
         )
-        playing = False
+        is_playing = False
         return
-    await m.edit("Generating Thumbnail")
+    file_path=wget.download(url)
+    await res.edit("Generating Thumbnail")
     await generate_cover_square(requested_by, title, artist, duration, thumbnail)
+    try:
+        is_playing = tgcalls.pytgcalls.is_playing(message_.chat.id)
+    except:
+        is_playing = False
 
-    await m.delete()
-    m = await app.send_photo(
+    if is_playing:
+        position = await sira.add(message_.chat.id, file_path)
+        await res.edit_text(f"#️⃣ Queued at position {position}.")
+    else:
+        await res.edit_text("▶️ Playing...")
+        tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000)
+    await res.delete()
+    m = await client.send_photo(
         chat_id=sudo_chat_id,
         photo="final.png",
         caption=f"Playing [{title}]({url}) Via Deezer.",
@@ -103,21 +111,11 @@ async def deezer(requested_by, query):
         ),
         parse_mode="markdown",
     )
-
-    s = await asyncio.create_subprocess_shell(
-        f"mpv {url} --no-video",
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-    await s.wait()
-    await m.delete()
-    playing = False
-
+    global m
 
 # Jiosaavn--------------------------------------------------------------------------------------
 
 async def jiosaavn(requested_by, query):
-    global playing
     res = await message_.reply_text("Searching 🔍🔎🔍🔎 for `{query}` on jio saavn")
     try:
         async with aiohttp.ClientSession() as session:
@@ -130,13 +128,12 @@ async def jiosaavn(requested_by, query):
         ssingers = r[0]["singers"]
         sthumb = r[0]["image"]
         sduration = r[0]["duration"]
-        sduration_converted = convert_seconds(int(sduration))
     except Exception as e:
         await m.edit(
             "Found Literally Nothing!, You Should Work On Your English."
         )
         print(str(e))
-        playing = False
+        is_playing = False
         return
     file_path=wget.download(slink)
     try:
@@ -158,7 +155,26 @@ async def jiosaavn(requested_by, query):
         caption=f"Playing `{sname}` Via Jiosaavn",
         photo="final.png",
         reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("Skip", callback_data="end")]]
+            [[InlineKeyboardButton("Skip", callback_data="endit")]]
         ),
         parse_mode="markdown",
     )
+
+
+
+@Client.on_callback_query(filters.regex("endit"))
+@errors
+@admins_only
+async def skkip(client: Client, CallbackQuery):
+    chat_id = jiosaavn.m.chat.id
+
+    sira.task_done(chat_id)
+
+    if sira.is_empty(chat_id):
+        tgcalls.pytgcalls.leave_group_call(chat_id)
+    else:
+        tgcalls.pytgcalls.change_stream(
+            chat_id, sira.get(chat_id)["file_path"]
+        )
+
+    await jiosaavn.m.reply_text("⏩ Skipped the current song.")
