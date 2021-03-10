@@ -95,7 +95,7 @@ async def deezer(client: Client, message_: Message):
         artist = r[0]["artist"]
         url = r[0]["url"]
     except:
-        await m.edit(
+        await res.edit(
             "Found Literally Nothing, You Should Work On Your English!"
         )
         is_playing = False
@@ -124,7 +124,7 @@ async def deezer(client: Client, message_: Message):
         ),
         parse_mode="markdown",
     ) 
-
+    os.remove("final.png")
 # Jiosaavn--------------------------------------------------------------------------------------
 @Client.on_message(
     filters.command("saavn")
@@ -148,7 +148,7 @@ async def jiosaavn(client: Client, message_: Message):
         sthumb = r[0]["image"]
         sduration = r[0]["duration"]
     except Exception as e:
-        await m.edit(
+        await res.edit(
             "Found Literally Nothing!, You Should Work On Your English."
         )
         print(str(e))
@@ -178,7 +178,7 @@ async def jiosaavn(client: Client, message_: Message):
         ),
         parse_mode="markdown",
     )
-
+    os.remove("final.png")
 
 
 @Client.on_callback_query(filters.regex("endit"))
@@ -197,3 +197,52 @@ async def skkip(client: Client, CallbackQuery):
         )
 
     await jiosaavn.m.reply_text("⏩ Skipped the current song.")
+@Client.on_message(
+    filters.command("yt")
+    & filters.group
+    & ~ filters.edited
+)
+async def ytp(client: Client, message_: Message):
+    requested_by = message_.from_user.first_name
+    text = message_.text.split(" ", 1)
+    query = text[1]
+    res = await message_.reply_text("Searching 🔍🔎🔍🔎 for `{query}` on You Tube")
+    try:
+        results = YoutubeSearch(query, max_results=1).to_dict()
+        link = f"https://youtube.com{results[0]['url_suffix']}"
+        title = results[0]["title"]
+        thumbnail = results[0]["thumbnails"][0]
+        duration = results[0]["duration"]
+        views = results[0]["views"]
+    except Exception as e:
+        await res.edit(
+            "Found Literally Nothing!, You Should Work On Your English."
+        )
+        is_playing = False
+        print(str(e))
+        return
+    file_path = await convert(download(link))
+    try:
+        is_playing = tgcalls.pytgcalls.is_playing(message_.chat.id)
+    except:
+        is_playing = False
+
+    if is_playing:
+        position = await sira.add(message_.chat.id, file_path)
+        await res.edit_text(f"#️⃣ Queued at position {position}.")
+    else:
+        await res.edit_text("▶️ Playing...")
+        tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000)
+    await res.edit("Processing Thumbnail.")
+    await generate_cover(requested_by, title, views, duration, thumbnail)
+    await res.delete
+    m = await client.send_photo(
+        chat_id=sudo_chat_id,
+        caption=f"Playing `{sname}` Via Jiosaavn",
+        photo="final.png",
+        reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("Skip", callback_data="endit")]]
+        ),
+        parse_mode="markdown",
+    )
+    os.remove("final.png")
