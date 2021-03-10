@@ -9,7 +9,7 @@ from config import DURATION_LIMIT
 from helpers.wrappers import errors
 from helpers.errors import DurationLimitError
 
-
+global m
 @Client.on_message(
     filters.command("play")
     & filters.group
@@ -68,7 +68,16 @@ async def play(client: Client, message_: Message):
     else:
         await res.edit_text("▶️ Playing...")
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000)
-async def deezer(requested_by, query):
+
+@Client.on_message(
+    filters.command("deezer")
+    & filters.group
+    & ~ filters.edited
+)
+async def deezer(client: Client, message_: Message):
+    requested_by = message_.from_user.first_name
+    text = message_.text.split(" ", 1)
+    query = text[1]
     res = await message_.reply_text("Searching 🔍🔎🔍🔎 for `{query}` on deezer")
     try:
         async with aiohttp.ClientSession() as session:
@@ -110,12 +119,18 @@ async def deezer(requested_by, query):
             [[InlineKeyboardButton("Skip", callback_data="end")]]
         ),
         parse_mode="markdown",
-    )
-    global m
+    ) 
 
 # Jiosaavn--------------------------------------------------------------------------------------
-
-async def jiosaavn(requested_by, query):
+@Client.on_message(
+    filters.command("saavn")
+    & filters.group
+    & ~ filters.edited
+)
+async def jiosaavn(client: Client, message_: Message):
+    requested_by = message_.from_user.first_name
+    text = message_.text.split(" ", 1)
+    query = text[1]
     res = await message_.reply_text("Searching 🔍🔎🔍🔎 for `{query}` on jio saavn")
     try:
         async with aiohttp.ClientSession() as session:
