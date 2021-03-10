@@ -4,6 +4,7 @@ from pyrogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
 )
+from __future__ import unicode_literals
 import aiohttp
 import wget
 import youtube_dl
@@ -110,7 +111,7 @@ async def deezer(client: Client, message_: Message):
         )
         is_playing = False
         return
-    file_path=wget.download(url)
+    file_path= await convert(wget.download(url))
     await res.edit("Generating Thumbnail")
     await generate_cover_square(requested_by, title, artist, duration, thumbnail)
     try:
@@ -164,7 +165,7 @@ async def jiosaavn(client: Client, message_: Message):
         print(str(e))
         is_playing = False
         return
-    file_path=wget.download(slink)
+    file_path= await convert(wget.download(slink))
     try:
         is_playing = tgcalls.pytgcalls.is_playing(message_.chat.id)
     except:
