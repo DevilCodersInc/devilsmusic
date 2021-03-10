@@ -1,10 +1,20 @@
 from pyrogram import Client, filters
-from pyrogram.types import Message
 from pyrogram.types import (
     Message,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
 )
+import aiohttp
+import wget
+import youtube_dl
+from youtube_search import YoutubeSearch
+import json
+import asyncio
+import aiofiles
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
+import os
 import tgcalls
 from converter import convert
 from youtube import download
@@ -246,3 +256,74 @@ async def ytp(client: Client, message_: Message):
         parse_mode="markdown",
     )
     os.remove("final.png")
+
+async def generate_cover_square(requested_by, title, artist, duration, thumbnail):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(thumbnail) as resp:
+            if resp.status == 200:
+                f = await aiofiles.open("background.png", mode="wb")
+                await f.write(await resp.read())
+                await f.close()
+    image1 = Image.open("./background.png")
+    image2 = Image.open("etc/foreground_square.png")
+    image3 = changeImageSize(600, 500, image1)
+    image4 = changeImageSize(600, 500, image2)
+    image5 = image3.convert("RGBA")
+    image6 = image4.convert("RGBA")
+    Image.alpha_composite(image5, image6).save("temp.png")
+    img = Image.open("temp.png")
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype("etc/font.otf", 20)
+    draw.text((150, 380), f"Title: {title}", (255, 255, 255), font=font)
+    draw.text((150, 405), f"Artist: {artist}", (255, 255, 255), font=font)
+    draw.text(
+        (150, 430),
+        f"Duration: {duration} Seconds",
+        (255, 255, 255),
+        font=font,
+    )
+
+    draw.text(
+        (150, 455),
+        f"Played By: {requested_by}",
+        (255, 255, 255),
+        font=font,
+    )
+    img.save("final.png")
+    os.remove("temp.png")
+    os.remove("background.png")
+
+
+# Generate cover for youtube
+
+async def generate_cover(requested_by, title, views, duration, thumbnail):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(thumbnail) as resp:
+            if resp.status == 200:
+                f = await aiofiles.open("background.png", mode="wb")
+                await f.write(await resp.read())
+                await f.close()
+
+    image1 = Image.open("./background.png")
+    image2 = Image.open("etc/foreground.png")
+    image3 = changeImageSize(1280, 720, image1)
+    image4 = changeImageSize(1280, 720, image2)
+    image5 = image3.convert("RGBA")
+    image6 = image4.convert("RGBA")
+    Image.alpha_composite(image5, image6).save("temp.png")
+    img = Image.open("temp.png")
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype("etc/font.otf", 32)
+    draw.text((190, 550), f"Title: {title}", (255, 255, 255), font=font)
+    draw.text(
+        (190, 590), f"Duration: {duration}", (255, 255, 255), font=font
+    )
+    draw.text((190, 630), f"Views: {views}", (255, 255, 255), font=font)
+    draw.text((190, 670),
+        f"Played By: {requested_by}",
+        (255, 255, 255),
+        font=font,
+    )
+    img.save("final.png")
+    os.remove("temp.png")
+    os.remove("background.png")
