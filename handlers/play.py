@@ -82,6 +82,16 @@ async def play(client: Client, message_: Message):
         await res.edit_text(f"#️⃣ Queued at position {position}.")
     else:
         await res.edit_text("▶️ Playing...")
+        res.delete
+        m = await client.send_photo(
+        chat_id=sudo_chat_id,
+        photo="https://telegra.ph/file/fe07b15733ed56f103cb4.jpg",
+        caption=f"Playing Your song Via Devil music bot.",
+        reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("Skip", callback_data="endit")]]
+        ),
+        parse_mode="markdown",
+    ) 
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000)
 
 @Client.on_message(
@@ -131,7 +141,7 @@ async def deezer(client: Client, message_: Message):
         photo="final.png",
         caption=f"Playing [{title}]({url}) Via Deezer.",
         reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("Skip", callback_data="end")]]
+            [[InlineKeyboardButton("Skip", callback_data="endit")]]
         ),
         parse_mode="markdown",
     ) 
@@ -266,7 +276,7 @@ async def generate_cover_square(requested_by, title, artist, duration, thumbnail
                 await f.write(await resp.read())
                 await f.close()
     image1 = Image.open("./background.png")
-    image2 = Image.open("etc/foreground_square.png")
+    image2 = Image.open("etc/IMG_20210311_131117_285.png")
     image3 = changeImageSize(600, 500, image1)
     image4 = changeImageSize(600, 500, image2)
     image5 = image3.convert("RGBA")
@@ -306,7 +316,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
                 await f.close()
 
     image1 = Image.open("./background.png")
-    image2 = Image.open("etc/foreground.png")
+    image2 = Image.open("etc/IMG_20210311_131117_285.png")
     image3 = changeImageSize(1280, 720, image1)
     image4 = changeImageSize(1280, 720, image2)
     image5 = image3.convert("RGBA")
