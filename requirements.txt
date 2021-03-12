@@ -3,3 +3,10 @@ TgCrypto
 python-dotenv
 youtube_dl
 youtube_search_python
+OpenCC
+Pillow
+requests
+youtube_search
+aiohttp
+aiofiles
+wget
