@@ -218,7 +218,13 @@ async def skkip(client: Client, CallbackQuery):
             m.chat_id, sira.get(m.chat_id)["file_path"]
         )
 
-    await m.reply_text("⏩ Skipped the current song.")
+def changeImageSize(maxWidth, maxHeight, image):
+    widthRatio = maxWidth / image.size[0]
+    heightRatio = maxHeight / image.size[1]
+    newWidth = int(widthRatio * image.size[0])
+    newHeight = int(heightRatio * image.size[1])
+    newImage = image.resize((newWidth, newHeight))
+    return newImage
  
 @Client.on_message(
     filters.command("yt")
