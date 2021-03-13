@@ -5,6 +5,7 @@ from pyrogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
 )
+from pyrogram.types import CallbackQuery
 from youtube_search import YoutubeSearch
 import aiohttp
 import wget
@@ -111,7 +112,7 @@ async def deezer(client: Client, message_: Message):
             ) as resp:
                 r = json.loads(await resp.text())
         title = r[0]["title"]
-        duration = convert_seconds(int(r[0]["duration"]))
+        duration = int(r[0]["duration"])
         thumbnail = r[0]["thumbnail"]
         artist = r[0]["artist"]
         url = r[0]["url"]
@@ -167,7 +168,7 @@ async def jiosaavn(client: Client, message_: Message):
         slink = r[0]["media_url"]
         ssingers = r[0]["singers"]
         sthumb = r[0]["image"]
-        sduration = r[0]["duration"]
+        sduration = int(r[0]["duration"])
     except Exception as e:
         await res.edit(
             "Found Literally Nothing!, You Should Work On Your English."
@@ -188,7 +189,7 @@ async def jiosaavn(client: Client, message_: Message):
         await res.edit_text("▶️ Playing...")
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000)
     await res.edit("Processing Thumbnail.")
-    await generate_cover_square(requested_by, sname, ssingers, sduration_converted, sthumb)
+    await generate_cover_square(requested_by, sname, ssingers, sduration, sthumb)
     await res.delete()
     m = await client.send_photo(
         chat_id=message_.chat.id,
@@ -206,18 +207,19 @@ async def jiosaavn(client: Client, message_: Message):
 @errors
 @admins_only
 async def skkip(client: Client, CallbackQuery):
-    chat_id = jiosaavn.m.chat.id
+    chat_id = m.chat.id
 
-    sira.task_done(chat_id)
+    sira.task_done(m.chat_id)
 
-    if sira.is_empty(chat_id):
-        tgcalls.pytgcalls.leave_group_call(chat_id)
+    if sira.is_empty(m.chat_id):
+        tgcalls.pytgcalls.leave_group_call(m.chat_id)
     else:
         tgcalls.pytgcalls.change_stream(
-            chat_id, sira.get(chat_id)["file_path"]
+            m.chat_id, sira.get(m.chat_id)["file_path"]
         )
 
     await m.reply_text("⏩ Skipped the current song.")
+ 
 @Client.on_message(
     filters.command("yt")
     & filters.group
@@ -259,7 +261,7 @@ async def ytp(client: Client, message_: Message):
     await res.delete
     m = await client.send_photo(
         chat_id=message_.chat.id,
-        caption=f"Playing `{sname}` Via Jiosaavn",
+        caption=f"Playing `{sname}` Via YouTube",
         photo="final.png",
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("Skip", callback_data="endit")]]
