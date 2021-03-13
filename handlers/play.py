@@ -35,7 +35,7 @@ chat_id = None
 @errors
 async def play(client: Client, message_: Message):
     audio = (message_.reply_to_message.audio or message_.reply_to_message.voice) if message_.reply_to_message else None
-
+    chat_id=message_.chat.id
     res = await message_.reply_text("🔄 Processing...")
 
     if audio:
@@ -156,6 +156,7 @@ async def deezer(client: Client, message_: Message):
 )
 async def jiosaavn(client: Client, message_: Message):
     requested_by = message_.from_user.first_name
+    chat_id=message_.chat.id
     text = message_.text.split(" ", 1)
     query = text[1]
     res = await message_.reply_text(f"Searching 🔍🔎🔍🔎 for `{query}` on jio saavn")
@@ -228,12 +229,13 @@ def changeImageSize(maxWidth, maxHeight, image):
     return newImage
  
 @Client.on_message(
-    filters.command("yt")
+    filters.command("ytt")
     & filters.group
     & ~ filters.edited
 )
 async def ytp(client: Client, message_: Message):
     requested_by = message_.from_user.first_name
+    chat_id=message_.chat.id
     text = message_.text.split(" ", 1)
     query = text[1]
     res = await message_.reply_text(f"Searching 🔍🔎🔍🔎 for `{query}` on You Tube")
