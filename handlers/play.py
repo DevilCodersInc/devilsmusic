@@ -84,7 +84,7 @@ async def play(client: Client, message_: Message):
         await res.edit_text("▶️ Playing...")
         res.delete
         m = await client.send_photo(
-        chat_id=sudo_chat_id,
+        chat_id=message_.chat.id,
         photo="https://telegra.ph/file/fe07b15733ed56f103cb4.jpg",
         caption=f"Playing Your song Via Devil music bot.",
         reply_markup=InlineKeyboardMarkup(
@@ -103,7 +103,7 @@ async def deezer(client: Client, message_: Message):
     requested_by = message_.from_user.first_name
     text = message_.text.split(" ", 1)
     query = text[1]
-    res = await message_.reply_text("Searching 🔍🔎🔍🔎 for `{query}` on deezer")
+    res = await message_.reply_text(f"Searching 🔍🔎🔍🔎 for `{query}` on deezer")
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(
@@ -137,7 +137,7 @@ async def deezer(client: Client, message_: Message):
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000)
     await res.delete()
     m = await client.send_photo(
-        chat_id=sudo_chat_id,
+        chat_id=message_.chat.id,
         photo="final.png",
         caption=f"Playing [{title}]({url}) Via Deezer.",
         reply_markup=InlineKeyboardMarkup(
@@ -156,7 +156,7 @@ async def jiosaavn(client: Client, message_: Message):
     requested_by = message_.from_user.first_name
     text = message_.text.split(" ", 1)
     query = text[1]
-    res = await message_.reply_text("Searching 🔍🔎🔍🔎 for `{query}` on jio saavn")
+    res = await message_.reply_text(f"Searching 🔍🔎🔍🔎 for `{query}` on jio saavn")
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(
@@ -191,8 +191,8 @@ async def jiosaavn(client: Client, message_: Message):
     await generate_cover_square(requested_by, sname, ssingers, sduration_converted, sthumb)
     await res.delete()
     m = await client.send_photo(
-        chat_id=sudo_chat_id,
-        caption=f"Playing `{sname}` Via Jiosaavn",
+        chat_id=message_.chat.id,
+        caption=f"Playing {sname} Via Jiosaavn",
         photo="final.png",
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("Skip", callback_data="endit")]]
@@ -217,7 +217,7 @@ async def skkip(client: Client, CallbackQuery):
             chat_id, sira.get(chat_id)["file_path"]
         )
 
-    await jiosaavn.m.reply_text("⏩ Skipped the current song.")
+    await m.reply_text("⏩ Skipped the current song.")
 @Client.on_message(
     filters.command("yt")
     & filters.group
@@ -227,7 +227,7 @@ async def ytp(client: Client, message_: Message):
     requested_by = message_.from_user.first_name
     text = message_.text.split(" ", 1)
     query = text[1]
-    res = await message_.reply_text("Searching 🔍🔎🔍🔎 for `{query}` on You Tube")
+    res = await message_.reply_text(f"Searching 🔍🔎🔍🔎 for `{query}` on You Tube")
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
         link = f"https://youtube.com{results[0]['url_suffix']}"
@@ -258,7 +258,7 @@ async def ytp(client: Client, message_: Message):
     await generate_cover(requested_by, title, views, duration, thumbnail)
     await res.delete
     m = await client.send_photo(
-        chat_id=sudo_chat_id,
+        chat_id=message_.chat.id,
         caption=f"Playing `{sname}` Via Jiosaavn",
         photo="final.png",
         reply_markup=InlineKeyboardMarkup(
