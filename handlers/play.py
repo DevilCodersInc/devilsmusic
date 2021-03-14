@@ -210,15 +210,15 @@ async def jiosaavn(client: Client, message_: Message):
 @errors
 @admins_only
 async def skkip(client: Client, CallbackQuery):
-    chat_id = message_.chat.id
+    chat_id = query.message.chat.id
 
-    sira.task_done(message_.chat_id)
+    sira.task_done(query.message.chat.id)
 
-    if sira.is_empty(mmessage_.chat_id):
-        tgcalls.pytgcalls.leave_group_call(message_.chat_id)
+    if sira.is_empty(query.message.chat.id):
+        tgcalls.pytgcalls.leave_group_call(query.message.chat.id)
     else:
         tgcalls.pytgcalls.change_stream(
-            message_.chat_id, sira.get(message_.chat_id)["file_path"]
+            message_.chat_id, sira.get(query.message.chat.id)["file_path"]
         )
 
 def changeImageSize(maxWidth, maxHeight, image):
