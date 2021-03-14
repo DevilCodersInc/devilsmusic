@@ -271,10 +271,11 @@ async def ytp(client: Client, message_: Message):
     res.delete
     m = await client.send_photo(
         chat_id=message_.chat.id,
-        caption=f"Playing `{sname}` Via YouTube",
+        caption=f"Playing `{query}` Via YouTube",
         photo="final.png",
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("Skip", callback_data="endit")]]
+            [[InlineKeyboardButton("watch on Youtube", url=link)]]
         ),
         parse_mode="markdown",
     )
