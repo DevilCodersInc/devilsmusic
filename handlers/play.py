@@ -268,7 +268,7 @@ async def ytp(client: Client, message_: Message):
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000)
     await res.edit("Processing Thumbnail.")
     await generate_cover(requested_by, title, views, duration, thumbnail)
-    await res.delete
+    res.delete
     m = await client.send_photo(
         chat_id=message_.chat.id,
         caption=f"Playing `{sname}` Via YouTube",
