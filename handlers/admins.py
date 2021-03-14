@@ -59,15 +59,16 @@ async def skip(client: Client, message: Message):
     chat_id = message.chat.id
 
     sira.task_done(chat_id)
-
+    await message.reply_text("Processing")
     if sira.is_empty(chat_id):
         tgcalls.pytgcalls.leave_group_call(chat_id)
+        await message.reply_text("nothing in queue")
     else:
         tgcalls.pytgcalls.change_stream(
             chat_id, sira.get(chat_id)["file_path"]
         )
 
-    await message.reply_text("⏩ Skipped the current song.")
+        await message.reply_text("⏩ Skipped the current song.")
 
 
 @Client.on_message(
