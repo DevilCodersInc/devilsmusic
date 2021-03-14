@@ -274,8 +274,8 @@ async def ytp(client: Client, message_: Message):
         caption=f"Playing `{query}` Via YouTube",
         photo="final.png",
         reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("Skip", callback_data="endit")]]
-            [[InlineKeyboardButton("watch on Youtube", url=link)]]
+            [[InlineKeyboardButton("Skip", callback_data="endit")],
+            [InlineKeyboardButton("watch on Youtube", url=link)]]
         ),
         parse_mode="markdown",
     )
