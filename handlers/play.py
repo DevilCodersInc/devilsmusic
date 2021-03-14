@@ -18,6 +18,7 @@ from PIL import ImageFont
 from PIL import ImageDraw
 import os
 from tgcalls import pytgcalls
+import tgcalls
 from converter import convert
 from youtube import download
 import sira
