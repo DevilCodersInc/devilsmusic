@@ -215,7 +215,7 @@ async def skkip(client: Client, CallbackQuery):
     sira.task_done(CallbackQuery.message.chat.id)
 
     if sira.is_empty(CallbackQuery.message.chat.id):
-        tgcalls.pytgcalls.leave_group_call(query.message.chat.id)
+        tgcalls.pytgcalls.leave_group_call(CallbackQuery.message.chat.id)
     else:
         tgcalls.pytgcalls.change_stream(
             CallbackQuery.message.chat_id, sira.get(CallbackQuery.message.chat.id)["file_path"]
