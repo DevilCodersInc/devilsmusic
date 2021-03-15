@@ -1,8 +1,10 @@
-# SU Music Player — The first open-source PyTgCalls based Pyrogram bot to play music in voice chats
-
+# DevilCodes Music Telegram Bot - This is a pyrogram bot based on pytgcalls for playing songs or audio files in Telegram group voice chat
+[Devil](https://telegra.ph/file/f739907e5a8c8aa78e758.jpg)
 ## Note
+-The playlist function isn't available for now but will be given in next update. Avoid use of commands related to skip
 
-Neither this, or PyTgCalls are fully stable.
+-It is inspired from su music project and hamkercat's telegram voice bot.
+Neither su music project , nor pytgcalls are stable
 
 ## Requirements
 
@@ -44,7 +46,7 @@ Copy `example.env` to `.env` and fill it with your credentials.
 
 
 ## Credits
-
-- [Roj](https://github.com/rojserbest): main developer
-- [Marvin](https://github.com/BlackStoneReborn): bug reporter
+- [hamker cat](https://github.com/thehamkercat/Telegram_VC_Bot)
+- [Roj](https://github.com/rojserbest)
+- [Marvin](https://github.com/BlackStoneReborn)
 - [Laky](https://github.com/Laky-64) & [Andrew](https://github.com/AndrewLaneX): PyTgCalls
