@@ -9,7 +9,7 @@ import asyncio
 queues: Dict[str, asyncio.Queue] = {}
 
 
-async def add(chat_id: Union[str, int], file_path: str) -> int:
+async def add(chat_id: Union[str, int], file_path: str)
     if isinstance(chat_id, int):
         chat_id = str(chat_id)
 
