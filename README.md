@@ -1,5 +1,7 @@
 # DevilCodes Music Telegram Bot - This is a pyrogram bot based on pytgcalls for playing songs or audio files in Telegram group voice chat
 [![Devil](https://telegra.ph/file/f739907e5a8c8aa78e758.jpg)](https://t.me/devilcodes_inc)
+![GitHub repo size](https://img.shields.io/github/repo-size/edguru/devilsmusic)
+
 ## Notes
 -The playlist function isn't available for now but will be given in next update. Avoid use of commands related to skip
 
