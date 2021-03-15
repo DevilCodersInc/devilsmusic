@@ -18,15 +18,19 @@ Use the buttons below to know more about me.""",
             [
                 [
                     InlineKeyboardButton(
-                        "⚒ Source code", url="https://t.me/SuMusicPlayer"
+                        "⚒ Source code", url="https://github.com/edguru/devilsmusic"
                     )
                 ],
                 [
                     InlineKeyboardButton(
-                        "💬 Group", url="https://t.me/su_Chats"
+                        "💬 Group", url="https://t.me/devilcodes_network"
                     ),
                     InlineKeyboardButton(
-                        "Channel 🔈", url="https://t.me/su_Bots"
+                        "Channel 🔈", url="https://t.me/devilcodes_inc"
+                    ),
+                    InlineKeyboardButton(
+                        "offtopic 😈", url="https://t.me/devils_crazy_chats"
+
                     )
                 ]
             ]
