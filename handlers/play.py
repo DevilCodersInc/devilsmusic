@@ -26,7 +26,7 @@ from config import DURATION_LIMIT
 from helpers.wrappers import errors, admins_only
 from helpers.errors import DurationLimitError
 
-m= None
+Global m= None
 chat_id = None
 @Client.on_message(
     filters.command("play")
@@ -210,15 +210,16 @@ async def jiosaavn(client: Client, message_: Message):
 @errors
 @admins_only
 async def skkip(client: Client, CallbackQuery):
-    chat_id = query.message.chat.id
+    Global m
+    chat_id = m.chat.id
 
-    sira.task_done(query.message.chat.id)
+    sira.task_done(m.chat.id)
 
-    if sira.is_empty(query.message.chat.id):
-        tgcalls.pytgcalls.leave_group_call(query.message.chat.id)
+    if sira.is_empty(m.chat.id):
+        tgcalls.pytgcalls.leave_group_call(m.chat.id)
     else:
         tgcalls.pytgcalls.change_stream(
-            message_.chat_id, sira.get(query.message.chat.id)["file_path"]
+            m.chat_id, sira.get(m.chat.id)["file_path"]
         )
 
 def changeImageSize(maxWidth, maxHeight, image):
