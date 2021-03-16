@@ -349,13 +349,3 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     img.save("final.png")
     os.remove("temp.png")
     os.remove("background.png")
-@pytgcalls.on_stream_end()
-def on_stream_end(chat_id: int) -> None:
-    sira.task_done(chat_id)
-
-    if sira.is_empty(chat_id):
-        pytgcalls.leave_group_call(chat_id)
-    else:
-        pytgcalls.change_stream(
-            chat_id, sira.get(chat_id)["file_path"]
-        )
