@@ -26,7 +26,7 @@ from config import DURATION_LIMIT
 from helpers.wrappers import errors, admins_only
 from helpers.errors import DurationLimitError
 
-Global m= None
+
 chat_id = None
 @Client.on_message(
     filters.command("play")
@@ -210,7 +210,6 @@ async def jiosaavn(client: Client, message_: Message):
 @errors
 @admins_only
 async def skkip(client: Client, CallbackQuery):
-    Global m
     chat_id = m.chat.id
 
     sira.task_done(m.chat.id)
