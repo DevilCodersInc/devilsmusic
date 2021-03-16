@@ -11,6 +11,7 @@ import aiohttp
 import wget
 import youtube_dl
 import json
+from Python_ARQ import ARQ
 import asyncio
 import aiofiles
 from PIL import Image
@@ -105,14 +106,11 @@ async def play(client: Client, message_: Message):
 async def deezer(client: Client, message_: Message):
     requested_by = message_.from_user.first_name
     text = message_.text.split(" ", 1)
-    query = text[1]
+    queryy = text[1]
     res = await message_.reply_text(f"Searching 🔍🔎🔍🔎 for `{query}` on deezer")
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(
-                f"https://thearq.tech/deezer?query={query}&count=1"
-            ) as resp:
-                r = json.loads(await resp.text())
+        arq = ARQ(https://thearq.tech)
+        r = await arq.deezer(query=queryy, limit=1)
         title = r[0]["title"]
         duration = int(r[0]["duration"])
         thumbnail = r[0]["thumbnail"]
