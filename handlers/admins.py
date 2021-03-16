@@ -5,6 +5,7 @@ import sys
 from time import sleep
 import tgcalls
 import sira
+from config import SUDO_USERS
 from cache.admins import set
 from helpers.wrappers import errors, admins_only
 
@@ -82,7 +83,7 @@ async def admincache(client, message: Message):
     set(message.chat.id, [member.user for member in await message.chat.get_members(filter="administrators")])
     await message.reply_text("❇️ Admin cache refreshed!")
 
-@Client.on_message(filters.command("gitpull") & filters.user(Sudo))
+@Client.on_message(filters.command("gitpull") & filters.user(SUDO_USERS))
 async def updater(client , message: Message):
     sent_msg = await message.reply_text(
         "Pulling all changes from remote and then attempting to restart."
