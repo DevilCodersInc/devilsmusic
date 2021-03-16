@@ -1,6 +1,8 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-
+import subprocess
+import sys
+from time import sleep
 import tgcalls
 import sira
 from cache.admins import set
