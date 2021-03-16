@@ -5,6 +5,7 @@ import sys
 from time import sleep
 import tgcalls
 import sira
+from config import SUDO_USERS
 from cache.admins import set
 from helpers.wrappers import errors, admins_only
 
