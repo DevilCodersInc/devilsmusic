@@ -1,8 +1,5 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-import subprocess
-import sys
-from time import sleep
 import tgcalls
 import sira
 from config import SUDO_USERS
@@ -85,7 +82,7 @@ async def admincache(client, message: Message):
 
 @Client.on_message(filters.command("gitpull") & filters.user(SUDO_USERS))
 async def updater(client , message: Message):
-    sent_msg = await message.reply_text(
+    sent_msg = message.reply_text(
         "Pulling all changes from remote and then attempting to restart."
       )
     subprocess.Popen("git pull", stdout=subprocess.PIPE, shell=True)
