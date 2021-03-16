@@ -3,7 +3,9 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/edguru/devilsmusic)
 
 ## Notes
--The playlist function isn't available for now but will be given in next update. Avoid use of commands related to skip
+-The commands and there use is explained here-: \n `/saavn` To search song on jio saavan and play the first result \n `/ytt` To search the song on Youtube and play the first matching result \n '/play` Reply this in response to a link or any telegram audio file it will be played \n `/skip` to skip current song \n `/stop or /kill` to stop the streaming of song \n `/pause` to pause the stream \n `/resume` to resume the playback. \n Inline search is also supported.
+
+
 
 -It is inspired from su music project and hamkercat's telegram voice bot.
 Neither su music project , nor pytgcalls are stable
