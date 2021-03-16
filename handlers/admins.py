@@ -1,9 +1,5 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-import subprocess
-import sys
-from time import sleep
-import git
 import tgcalls
 import sira
 from config import SUDO_USERS
