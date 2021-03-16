@@ -80,20 +80,10 @@ async def admincache(client, message: Message):
     set(message.chat.id, [member.user for member in await message.chat.get_members(filter="administrators")])
     await message.reply_text("❇️ Admin cache refreshed!")
 
-@Client.on_message(filters.command("gitpull") & filters.user(SUDO_USERS))
-async def updater(client , message: Message):
-    sent_msg = message.reply_text(
-        "Pulling all changes from remote and then attempting to restart."
-      )
-    subprocess.Popen("git pull", stdout=subprocess.PIPE, shell=True)
-
-    sent_msg_text = sent_msg.text + "\n\nChanges pulled...I guess.. Restarting in "
-
-    for i in reversed(range(5)):
-        sent_msg.edit_text(sent_msg_text + str(i + 1))
-        sleep(1)
-
-    sent_msg.edit_text("Restarted.")
-
-    os.system("restart.bat")
-    os.execv("start.bat", sys.argv)
+@Client.on_message(
+    filters.command("help")
+    & filters.group
+    & ~ filters.edited
+)
+async def helper(client , message:Message)
+     await message.reply_text("The commands and there use is explained here-: \n `/saavn` To search song on jio saavan and play the first result \n `/ytt` To search the song on Youtube and play the first matching result \n '/play` Reply this in response to a link or any telegram audio file it will be played \n `/skip` to skip current song \n `/stop or /kill` to stop the streaming of song \n `/pause` to pause the stream \n `/resume` to resume the playback. \n Inline search is also supported.")
