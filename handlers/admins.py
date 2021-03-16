@@ -81,11 +81,12 @@ async def skip(client: Client, message: Message):
 async def admincache(client, message: Message):
     set(message.chat.id, [member.user for member in await message.chat.get_members(filter="administrators")])
     await message.reply_text("❇️ Admin cache refreshed!")
+
 @Client.on_message(filters.command("gitpull") & filters.user(Sudo))
 async def updater(client , message: Message):
-sent_msg = await message in message.reply_text(
+    sent_msg = await message.reply_text(
         "Pulling all changes from remote and then attempting to restart."
-    )
+      )
     subprocess.Popen("git pull", stdout=subprocess.PIPE, shell=True)
 
     sent_msg_text = sent_msg.text + "\n\nChanges pulled...I guess.. Restarting in "
