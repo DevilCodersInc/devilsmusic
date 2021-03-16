@@ -3,7 +3,15 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/edguru/devilsmusic)
 
 ## Notes
--The commands and there use is explained here-: \n `/saavn` To search song on jio saavan and play the first result \n `/ytt` To search the song on Youtube and play the first matching result \n '/play` Reply this in response to a link or any telegram audio file it will be played \n `/skip` to skip current song \n `/stop or /kill` to stop the streaming of song \n `/pause` to pause the stream \n `/resume` to resume the playback. \n Inline search is also supported.
+-The commands and there use is explained here-:
+ `/saavn` To search song on jio saavan and play the first result 
+ `/ytt` To search the song on Youtube and play the first matching result.
+ '/play` Reply this in response to a link or any telegram audio file it will be played 
+ `/skip` to skip current song 
+ `/stop or /kill` to stop the streaming of song 
+ `/pause` to pause the stream 
+ `/resume` to resume the playback. 
+ Inline search is also supported.
 
 
 
