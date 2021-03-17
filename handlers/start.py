@@ -32,9 +32,7 @@ Use the buttons below to know more about me.""",
                         "Channel 🔈", url="https://t.me/devilcodes_inc"
                     ),
                     InlineKeyboardButton(
-                        "offtopic 😈", url="https://t.me/devils_crazy_chats"
-
-                    )
+                        "offtopic 😈", url="https://t.me/devils_crazy_chats" )
                 ]
             ]
         )
