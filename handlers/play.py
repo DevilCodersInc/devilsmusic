@@ -76,12 +76,7 @@ async def play(client: Client, message_: Message):
 
         file_path = await convert(download(url))
 
-    try:
-        is_playing = tgcalls.pytgcalls.is_playing(message_.chat.id)
-    except:
-        is_playing = False
-
-    if is_playing:
+    if message.chat.id in callsmusic.pytgcalls.active_calls:
         position = await sira.add(message_.chat.id, file_path)
         await res.edit_text(f"#️⃣ Queued at position {position}.")
     else:
@@ -125,12 +120,7 @@ async def deezer(client: Client, message_: Message):
     file_path= await convert(wget.download(url))
     await res.edit("Generating Thumbnail")
     await generate_cover_square(requested_by, title, artist, duration, thumbnail)
-    try:
-        is_playing = tgcalls.pytgcalls.is_playing(message_.chat.id)
-    except:
-        is_playing = False
-
-    if is_playing:
+    if message.chat.id in callsmusic.pytgcalls.active_calls:
         position = await sira.add(message_.chat.id, file_path)
         await res.edit_text(f"#️⃣ Queued at position {position}.")
     else:
@@ -178,12 +168,7 @@ async def jiosaavn(client: Client, message_: Message):
         is_playing = False
         return
     file_path= await convert(wget.download(slink))
-    try:
-        is_playing = tgcalls.pytgcalls.is_playing(message_.chat.id)
-    except:
-        is_playing = False
-
-    if is_playing:
+    if message.chat.id in callsmusic.pytgcalls.active_calls:
         position = await sira.add(message_.chat.id, file_path)
         await res.edit_text(f"#️⃣ Queued at position {position}.")
     else:
@@ -253,12 +238,7 @@ async def ytp(client: Client, message_: Message):
         print(str(e))
         return
     file_path = await convert(download(link))
-    try:
-        is_playing = tgcalls.pytgcalls.is_playing(message_.chat.id)
-    except:
-        is_playing = False
-
-    if is_playing:
+    if message.chat.id in callsmusic.pytgcalls.active_calls:
         position = await sira.add(message_.chat.id, file_path)
         await res.edit_text(f"#️⃣ Queued at position {position}.")
     else:
