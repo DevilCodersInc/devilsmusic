@@ -91,7 +91,7 @@ async def play(client: Client, message_: Message):
         ),
         parse_mode="markdown",
     ) 
-        tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000)
+        tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000 , tgcalls.pytgcalls.get_cache_peer())
 
 @Client.on_message(
     filters.command("deezer")
