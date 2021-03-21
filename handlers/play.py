@@ -77,7 +77,7 @@ async def play(client: Client, message_: Message):
         file_path =await convert(download(url))
 
     if message_.chat.id in tgcalls.pytgcalls.active_calls:
-        position = await sira.add(message_.chat.id, file_path)
+        position = sira.add(message_.chat.id, file_path)
         await res.edit_text(f"#️⃣ Queued at position {position}.")
     else:
         await res.edit_text("▶️ Playing...")
@@ -118,7 +118,7 @@ async def deezer(client: Client, message_: Message):
     await generate_cover_square(requested_by, title, artist, duration, thumbnail)
     if message_.chat.id in tgcalls.pytgcalls.active_calls:
         await res.edit("adding in queue")
-        position = await sira.add(message_.chat.id, file_path)
+        position = sira.add(message_.chat.id, file_path)
         await res.edit_text(f"#️⃣ Queued at position {position}.")
     else:
         await res.edit_text("▶️ Playing...")
@@ -162,7 +162,7 @@ async def jiosaavn(client: Client, message_: Message):
         return
     file_path= await convert(wget.download(slink))
     if message_.chat.id in tgcalls.pytgcalls.active_calls:
-        position = await sira.add(message_.chat.id, file_path)
+        position = sira.add(message_.chat.id, file_path)
         await res.edit_text(f"#️⃣ Queued at position {position}.")
     else:
         await res.edit_text("▶️ Playing...")
@@ -213,7 +213,7 @@ async def ytp(client: Client, message_: Message):
         return
     file_path = await convert(download(link))
     if message_.chat.id in tgcalls.pytgcalls.active_calls:
-        position = await sira.add(message_.chat.id, file_path)
+        position = sira.add(message_.chat.id, file_path)
         await res.edit_text(f"#️⃣ Queued at position {position}.")
     else:
         await res.edit_text("▶️ Playing...")
