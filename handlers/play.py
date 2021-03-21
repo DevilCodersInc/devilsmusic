@@ -86,11 +86,8 @@ async def play(client: Client, message_: Message):
         chat_id=message_.chat.id,
         photo="https://telegra.ph/file/fe07b15733ed56f103cb4.jpg",
         caption=f"Playing Your song Via Devil music bot.",
-        reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("Skip", callback_data="endit")]]
-        ),
         parse_mode="markdown",
-    ) 
+         ) 
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000 , tgcalls.pytgcalls.get_cache_peer())
 
 @Client.on_message(
@@ -130,10 +127,7 @@ async def deezer(client: Client, message_: Message):
     m = await client.send_photo(
         chat_id=message_.chat.id,
         photo="final.png",
-        caption=f"Playing [{title}]({url}) Via Deezer.",
-        reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("Skip", callback_data="endit")]]
-        ),
+        caption=f"Playing [{title}]({url}) Via Deezer."
         parse_mode="markdown",
     ) 
     os.remove("final.png")
@@ -181,28 +175,10 @@ async def jiosaavn(client: Client, message_: Message):
         chat_id=message_.chat.id,
         caption=f"Playing {sname} Via Jiosaavn",
         photo="final.png",
-        reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("Skip", callback_data="endit")]]
-        ),
         parse_mode="markdown",
     )
     os.remove("final.png")
 
-
-@Client.on_callback_query(filters.regex("endit"))
-@errors
-@admins_only
-async def skkip(client: Client, CallbackQuery):
-    chat_id = m.chat.id
-
-    sira.task_done(m.chat.id)
-
-    if sira.is_empty(m.chat.id):
-        tgcalls.pytgcalls.leave_group_call(m.chat.id)
-    else:
-        tgcalls.pytgcalls.change_stream(
-            m.chat_id, sira.get(m.chat.id)["file_path"]
-        )
 
 def changeImageSize(maxWidth, maxHeight, image):
     widthRatio = maxWidth / image.size[0]
@@ -252,8 +228,7 @@ async def ytp(client: Client, message_: Message):
         caption=f"Playing `{query}` Via YouTube",
         photo="final.png",
         reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("Skip", callback_data="endit")],
-            [InlineKeyboardButton("watch on Youtube", url=link)]]
+            [[InlineKeyboardButton("watch on Youtube", url=link)]]
         ),
         parse_mode="markdown",
     )
