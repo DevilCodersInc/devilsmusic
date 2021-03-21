@@ -33,6 +33,11 @@ Use the buttons below to know more about me.""",
                     ),
                     InlineKeyboardButton(
                         "offtopic 😈", url="https://t.me/devils_crazy_chats" )
+                ],
+                [
+                    InlineKeyboardButton(
+                        "Donate the coder", url="https://www.paypal.me/devilgaurav"
+                    )
                 ]
             ]
         )
