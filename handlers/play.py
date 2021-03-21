@@ -74,7 +74,7 @@ async def play(client: Client, message_: Message):
 
         url = text[offset:offset+length]
 
-        file_path = await convert(download(url))
+        file_path = convert(download(url))
 
     if message_.chat.id in tgcalls.pytgcalls.active_calls:
         position = await sira.add(message_.chat.id, file_path)
