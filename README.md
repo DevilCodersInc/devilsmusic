@@ -56,6 +56,7 @@ Copy `example.env` to `.env` and fill it with your credentials.
 
 ### Heroku
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/edguru/devilsmusic/)
+
 ##Support
 - [Channel](https://t.me/devilcodes_inc)
 - [Group](https://t.me/devilcodes_network)
