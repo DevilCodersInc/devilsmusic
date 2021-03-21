@@ -14,7 +14,7 @@
 - `/resume` to resume the playback. 
 - Inline search is also supported.
 
-
+- Use pyrogram string u can use @StringGenBot
 
 -It is inspired from su music project and hamkercat's telegram voice bot.
 Neither su music project , nor pytgcalls are stable
@@ -56,8 +56,9 @@ Copy `example.env` to `.env` and fill it with your credentials.
 
 ### Heroku
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/edguru/devilsmusic/)
-
-
+##Support
+- [Channel](https://t.me/devilcodes_inc)
+- [Group](https://t.me/devilcodes_network)
 ## Credits
 - [hamker cat](https://github.com/thehamkercat/Telegram_VC_Bot)
 - [Roj](https://github.com/rojserbest)
