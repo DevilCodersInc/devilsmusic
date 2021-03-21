@@ -86,7 +86,6 @@ async def play(client: Client, message_: Message):
         chat_id=message_.chat.id,
         photo="https://telegra.ph/file/fe07b15733ed56f103cb4.jpg",
         caption=f"Playing Your song Via Devil music bot.",
-        parse_mode="markdown",
          ) 
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000 , tgcalls.pytgcalls.get_cache_peer())
 
@@ -128,7 +127,6 @@ async def deezer(client: Client, message_: Message):
         chat_id=message_.chat.id,
         photo="final.png",
         caption=f"Playing [{title}]({url}) Via Deezer."
-        parse_mode="markdown",
     ) 
     os.remove("final.png")
 # Jiosaavn--------------------------------------------------------------------------------------
@@ -175,7 +173,6 @@ async def jiosaavn(client: Client, message_: Message):
         chat_id=message_.chat.id,
         caption=f"Playing {sname} Via Jiosaavn",
         photo="final.png",
-        parse_mode="markdown",
     )
     os.remove("final.png")
 
