@@ -84,9 +84,13 @@ async def play(client: Client, message_: Message):
         res.delete
         m = await client.send_photo(
         chat_id=message_.chat.id,
-        photo="https://telegra.ph/file/fe07b15733ed56f103cb4.jpg",
-        caption=f"Playing Your song Via Devil music bot.",
-         ) 
+        photo="https://telegra.ph/file/fe07b15733ed56f103cb4.jpg.",
+        caption=f"Playing Your song Via Devil music bot..",
+         reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("Skip", callback_data="skip")]]
+        ),
+        parse_mode="markdown",
+    )
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path, 48000 , tgcalls.pytgcalls.get_cache_peer())
 
 @Client.on_message(
@@ -127,9 +131,47 @@ async def deezer(client: Client, message_: Message):
     m = await client.send_photo(
         chat_id=message_.chat.id,
         photo="final.png",
-        caption=f"Playing [{title}]({url}) Via Deezer."
-    ) 
+        caption=f"Playing [{title}]({url}) Via Deezer.",
+         reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("Skip", callback_data="skip")]]
+        ),
+        parse_mode="markdown",
+    )
     os.remove("final.png")
+
+
+#leave-----------------------------
+
+@Client.on_message(
+    filters.command("leave")
+    & filters.group
+    & ~ filters.edited
+)
+async def leave(client: Client, message_: Message):
+    res = await message_.reply_text(f"Processing ♻️")
+    if message_.chat.id in tgcalls.pytgcalls.active_calls:
+         await res.edit(
+        f"""I am currently playing...
+Press the buttons below to continue...""",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        "👥Leave VoiceChat👥", callback_data="leavevc"
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        "❌ Close ❌", callback_data="close"
+                    )
+                ]
+            ]
+        )
+    )
+
+    else:
+         await res.edit_text("I am not in the voice chat...")
+
 # Jiosaavn--------------------------------------------------------------------------------------
 @Client.on_message(
     filters.command("saavn")
@@ -172,8 +214,12 @@ async def jiosaavn(client: Client, message_: Message):
     await res.delete()
     m = await client.send_photo(
         chat_id=message_.chat.id,
-        caption=f"Playing {sname} Via Jiosaavn",
         photo="final.png",
+        caption=f"Playing [{title}]({url}) Via Deezer.",
+         reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("Skip", callback_data="skip")]]
+        ),
+        parse_mode="markdown",
     )
     os.remove("final.png")
 
